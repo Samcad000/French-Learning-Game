@@ -1,0 +1,66 @@
+<style>
+    .body{
+  background-color: #000080;
+}
+
+.grid-container{ 
+  display: grid;
+  grid-template-columns: 25% 25%;
+  justify-content:center;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.grid-container2{ 
+  display: grid;
+  grid-template-columns: 50%;
+  justify-content: space-evenly;
+  grid-gap: 10px;
+  padding: 10px;
+}
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 10px 0;
+  font-size: 30px;
+}
+.grid-container2 > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 100px 0;
+  font-size: 30px;
+}
+
+#topic{
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 46%; 
+  text-align: center;
+  position: relative;
+  font-size: 30px;
+  height: 200px;
+  margin: auto;
+  padding:25px;
+}
+</style>
+
+
+<main>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 
+   <body class="body">
+  <div class="grid-container">
+   <div id="btn1">score <br>34</div>
+   <div id="btn2">score <br>50</div>
+  </div>
+  <div id="topic">
+   Sunday
+  </div>
+  <div class="grid-container2">
+   <div id="btn1">Today</div>
+   <div id="btn2">Friday</div>
+   <div id="btn2">Sunday</div>
+   <div id="btn2">Monday</div>
+   <div id="btn2">Tuesday</div>
+   <div id="btn2">Friday</div>
+  </div>
+  </body>
+ </main>

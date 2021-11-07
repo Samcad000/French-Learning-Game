@@ -26,41 +26,107 @@
 .grid-container2 > div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
-  padding: 100px 0;
+  padding: 10px 0;
   font-size: 30px;
 }
 
-#topic{
+.question{
   background-color: rgba(255, 255, 255, 0.8);
   width: 46%; 
   text-align: center;
   position: relative;
   font-size: 30px;
-  height: 200px;
+  height: 20px;
   margin: auto;
   padding:25px;
 }
 </style>
 
 
+<script>
+
+var english = new Array("boy","girl","man","woman","house","school","bible","brother","sister"); 
+var french = new Array("garcon","fille","homme","femme","maison","ecole","bible","frere","seaur"); 
+
+
+function loadQuestion(){
+	
+	document.getElementById("option1").style.visibility = 'visible';
+	document.getElementById("option2").style.visibility = 'visible';
+	document.getElementById("option3").style.visibility = 'visible';
+	document.getElementById("option4").style.visibility = 'visible';
+	document.getElementById("option5").style.visibility = 'visible';
+	document.getElementById("option6").style.visibility = 'visible';
+	
+	var x1=0+Math.floor(Math.random() * 9); 
+	
+	var y1=0+Math.floor(Math.random() * 9); 
+	var y2=0+Math.floor(Math.random() * 9); 
+	var y3=0+Math.floor(Math.random() * 9); 
+	var y4=0+Math.floor(Math.random() * 9); 
+	var y5=0+Math.floor(Math.random() * 9); 
+	var y6=0+Math.floor(Math.random() * 9); 
+	
+	
+    //initialize questions and options.	
+	document.getElementById("question").innerHTML=english[x1];
+	
+	document.getElementById("option1").innerHTML=french[y1];
+	document.getElementById("option2").innerHTML=french[y2];
+	document.getElementById("option3").innerHTML=french[y3];
+	document.getElementById("option4").innerHTML=french[y4];
+	document.getElementById("option5").innerHTML=french[y5];
+	document.getElementById("option6").innerHTML=french[y6];
+	
+	
+	//set the correct answer
+	var z1=1+Math.floor(Math.random() * 6); 
+	document.getElementById("option"+z1).innerHTML=french[x1];
+	
+	
+}
+
+
+function checkAnswer(x){
+	
+	var optionText=document.getElementById(x).innerHTML;
+	var index = french.indexOf(optionText);
+	var translateWord=english[index];
+	
+	var question=document.getElementById("question").innerHTML;
+	
+	if(question==translateWord){
+		
+		//document.getElementById("question").innerHTML="Correct";
+		loadQuestion();
+		
+	}else{
+		document.getElementById(x).style.visibility = 'hidden';
+	}
+	
+}
+
+</script>
+
+
 <main>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
  
-   <body class="body">
+   <body class="body" onload=loadQuestion()>
   <div class="grid-container">
    <div id="btn1">score <br>34</div>
    <div id="btn2">score <br>50</div>
   </div>
-  <div id="topic">
+  <div class="question" id="question">
    Sunday
   </div>
   <div class="grid-container2">
-   <div id="btn1">Today</div>
-   <div id="btn2">Friday</div>
-   <div id="btn2">Sunday</div>
-   <div id="btn2">Monday</div>
-   <div id="btn2">Tuesday</div>
-   <div id="btn2">Friday</div>
+   <div id="option1" onclick="checkAnswer('option1')">Today</div>
+   <div id="option2" onclick="checkAnswer('option2')">Friday</div>
+   <div id="option3" onclick="checkAnswer('option3')">Sunday</div>
+   <div id="option4" onclick="checkAnswer('option4')">Monday</div>
+   <div id="option5" onclick="checkAnswer('option5')">Tuesday</div>
+   <div id="option6" onclick="checkAnswer('option6')">Friday</div>
   </div>
   </body>
  </main>

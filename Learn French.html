@@ -1,18 +1,18 @@
 <style>
     .body{
-  background-color: #000080;
+    background-color: rgb(50,50,50);
 }
 
 .grid-container{ 
   display: grid;
-  grid-template-columns: 25% 25%;
+  grid-template-columns: 50% 50%;
   justify-content:center;
   grid-gap: 10px;
   padding: 10px;
 }
 .grid-container2{ 
   display: grid;
-  grid-template-columns: 50%;
+  grid-template-columns: 100%;
   justify-content: space-evenly;
   grid-gap: 10px;
   padding: 10px;
@@ -21,44 +21,100 @@
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 10px 0;
-  font-size: 30px;
+  font-size: 20px;
+  color:rgb(50,50,50);
 }
 .grid-container2 > div {
   background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
   padding: 10px 0;
-  font-size: 30px;
+  font-size: 20px;
+  color:rgb(50,50,50);
+  
 }
 
 .question{
   background-color: rgba(255, 255, 255, 0.8);
-  width: 46%; 
+  width: 88%; 
   text-align: center;
   position: relative;
-  font-size: 30px;
+  font-size: 20px;
   height: 20px;
   margin: auto;
-  padding:25px;
+  padding:10px;
+  color:rgb(50,50,50);
+  background-color: rgb(220,238,245);
 }
-@media screen and (max-width: 500px) {
-  .question,
-  .grid-container2 > div,
-  .grid-container > div,
-  .grid-container2,
-  .grid-container,
-  .body,{width:70%;
-  }
+
+
+.gameOver{
+	
+  position:fixed;
+  top:20%;	
+  left:10%;
+  width:80%;
+  height:30%;
+  background-color:rgb(225,225,225);
+  display:none;	
+  text-align: center;
+ }
+
+
+@media only screen and (min-width:400px) {
+
+ .w1{
+	
+   width: 100%; 	
+   
+ }
+
+
 }
+
+@media only screen and (min-width:800px) {
+
+ .w2{
+	
+   width: 50%; 	
+   
+	 
+ }
+
+
+}
+
 </style>
 
 
 <script>
 
-var english = new Array("boy","girl","man","woman","house","school","bible","brother","sister"); 
-var french = new Array("garcon","fille","homme","femme","maison","ecole","bible","frere","seaur"); 
+//resource
+//https://www.kirupa.com/html5/storing_and_retrieving_an_array_from_local_storage.htm
+
+
+var english = new Array("to be","to have","to do","to say","to go","to get","to make","to know","to think","to take","to see","to come","to want","to look","to use","to find","to give","to tell","to work","to call","to try","to ask","to need","to feel","to become","to leave","to put","to mean","to keep","to let","to begin","to seem","to help","to talk","to turn","to start","to show","to hear","to play","to run","to move","to like","to live","to believe","to hold","to bring","to happen","to write","to provide","to sit","to remember","to love","to consider","to appear","to buy","to wait","to serve","to die","to send","to expect","to build","to stay","to fall","to cut","to reach","to kill","to remain","to suggest","to raise","to pass","to sell","to require","to report","to decide","to pull","to stand","to lose","to pay","to meet","to include","to continue","to set","to learn","to change","to lead","to understand","to watch","to follow","to stop","to create","to speak","to read","to allow","to add","to spend","to grow","to open","to walk","to win","to offer"); 
+var french = new Array("etre","pour avoir","a faire","dire","aller","obtenir","faire","a savoir","penser","prendre","voir","venir","vouloir","regarder","utiliser","trouver","donner","dire","travailler","appeler","essayer","demander","avoir besoin","sentir","devenir","quitter","mettre","vouloir dire","garder","laisser","pour commencer","sembler","aider","parler","tourner","commencer","montrer","entendre","jouer","courir","bouger","aimer","vivre","croire","tenir","apporter","se passer","ecrire","fournir","s'asseoir","se souvenir","aimer","aenvisager","apparaitre","acheter","attendre","servir","mourir","envoyer","s'attendre a","construire","rester","tomber","couper","atteindre","tuer","rester","suggerer","augmenter","passer","vendre","requerir","signaler","decider","tirer","se tenir debout","perdre","payer","rencontrer","inclure","continuer","mettre en place","apprendre","changer","mener","comprendre","regarder","suivre","arreter","creer","parler","lire","autoriser","ajouter","depenser","grandir","ouvrir","marcher","gagner","offrir"
+
+); 
+
+//game states
+var questionNo=100;
+var game_start=0;
+var game_duration=120;
+var game_score=0;
+var game_time=0;
+var myInterval;
+var answerOption="";
+
+var clickState=0;  //0 means that an option is yet to be clicked. //1 an option as been click.
+var delaytime=3;
+
 
 
 function loadQuestion(){
+	
+	clickState=0;
+	delaytime=5;
 	
 	document.getElementById("option1").style.visibility = 'visible';
 	document.getElementById("option2").style.visibility = 'visible';
@@ -67,14 +123,24 @@ function loadQuestion(){
 	document.getElementById("option5").style.visibility = 'visible';
 	document.getElementById("option6").style.visibility = 'visible';
 	
-	var x1=0+Math.floor(Math.random() * 9); 
+	document.getElementById("option1").style.backgroundColor = 'RGB(225,225,225)';
+	document.getElementById("option2").style.backgroundColor = 'RGB(225,225,225)';
+	document.getElementById("option3").style.backgroundColor = 'RGB(225,225,225)';
+	document.getElementById("option4").style.backgroundColor = 'RGB(225,225,225)';
+	document.getElementById("option5").style.backgroundColor = 'RGB(225,225,225)';
+	document.getElementById("option6").style.backgroundColor = 'RGB(225,225,225)';
 	
-	var y1=0+Math.floor(Math.random() * 9); 
-	var y2=0+Math.floor(Math.random() * 9); 
-	var y3=0+Math.floor(Math.random() * 9); 
-	var y4=0+Math.floor(Math.random() * 9); 
-	var y5=0+Math.floor(Math.random() * 9); 
-	var y6=0+Math.floor(Math.random() * 9); 
+		
+	
+	
+	var x1=0+Math.floor(Math.random() * questionNo); 
+	
+	var y1=0+Math.floor(Math.random() * questionNo); 
+	var y2=0+Math.floor(Math.random() * questionNo); 
+	var y3=0+Math.floor(Math.random() * questionNo); 
+	var y4=0+Math.floor(Math.random() * questionNo); 
+	var y5=0+Math.floor(Math.random() * questionNo); 
+	var y6=0+Math.floor(Math.random() * questionNo); 
 	
 	
     //initialize questions and options.	
@@ -91,6 +157,8 @@ function loadQuestion(){
 	//set the correct answer
 	var z1=1+Math.floor(Math.random() * 6); 
 	document.getElementById("option"+z1).innerHTML=french[x1];
+	answerOption="option"+z1;
+	
 	
 	
 }
@@ -98,20 +166,121 @@ function loadQuestion(){
 
 function checkAnswer(x){
 	
+	var question=document.getElementById("question").innerHTML;	
+	
+	var index = english.indexOf(question);	
+	
+	
+	var translateWord=french[index];
+	
+	
+	
+	//start timing
+	timeCount();
+	
 	var optionText=document.getElementById(x).innerHTML;
-	var index = french.indexOf(optionText);
-	var translateWord=english[index];
 	
-	var question=document.getElementById("question").innerHTML;
-	
-	if(question==translateWord){
+	if(optionText==translateWord){
 		
 		//document.getElementById("question").innerHTML="Correct";
 		loadQuestion();
 		
+		game_score=game_score+1;
+		
 	}else{
-		document.getElementById(x).style.visibility = 'hidden';
+		//document.getElementById(x).style.visibility = 'hidden';
+		
+		game_score=game_score-1;
+		
 	}
+	
+	//indicate correct option with color
+	document.getElementById(x).style.backgroundColor="pink"; 
+	document.getElementById(answerOption).style.backgroundColor="RGB(20,200,20)"; 
+	
+	
+	clickState=1;
+	
+	
+	 
+	 
+}
+
+
+function timeCount(){	  
+  
+   if(game_start==0){
+	   
+	   game_start=1;
+	   
+	   myInterval=setInterval(function(){ 
+	   
+		  game_time=game_time+1;
+		  
+		  gameEnd();
+		
+		  document.getElementById("game_time").innerHTML=game_time;
+		  document.getElementById("game_score").innerHTML=game_score;
+		  
+		  
+		  if(clickState==1){
+			  delaytime=delaytime-1;
+		  }
+		  
+		  		  
+		  if(delaytime==0){
+			  
+			  loadQuestion();
+		  }
+		  
+		  
+	   
+	   }, 1000);
+
+	}
+}
+
+
+
+function gameEnd(){
+	
+	if(game_time>=game_duration){
+		
+		
+		document.getElementById("question").style.visibility = 'hidden';
+		document.getElementById("option1").style.visibility = 'hidden';
+		document.getElementById("option2").style.visibility = 'hidden';
+		document.getElementById("option3").style.visibility = 'hidden';
+		document.getElementById("option4").style.visibility = 'hidden';
+		document.getElementById("option5").style.visibility = 'hidden';
+		document.getElementById("option6").style.visibility = 'hidden';
+		
+		document.getElementById("gameOver").style.display ='block';
+		
+		clearInterval(myInterval);
+	}
+	
+}
+
+function startGame(){
+	
+	
+	document.getElementById("question").style.visibility = 'visible';
+	document.getElementById("option1").style.visibility = 'visible';
+	document.getElementById("option2").style.visibility = 'visible';
+	document.getElementById("option3").style.visibility = 'visible';
+	document.getElementById("option4").style.visibility = 'visible';
+	document.getElementById("option5").style.visibility = 'visible';
+	document.getElementById("option6").style.visibility = 'visible';
+	
+	document.getElementById("gameOver").style.display ='none';
+	
+	game_start=0;
+	game_time=0;
+	game_score=0;
+	
+	document.getElementById("game_time").innerHTML=game_time;
+	document.getElementById("game_score").innerHTML=game_score;
 	
 }
 
@@ -123,13 +292,13 @@ function checkAnswer(x){
  
    <body class="body" onload=loadQuestion()>
   <div class="grid-container">
-   <div id="btn1">score <br>34</div>
-   <div id="btn2">score <br>50</div>
+   <div id="btn1">score <br><span id=game_score>0</span></div>
+   <div id="btn2">Time <br><span id=game_time>0</span></div>
   </div>
-  <div class="question" id="question">
+  <div class="question w1 w2" id="question">
    Sunday
   </div>
-  <div class="grid-container2">
+  <div class="grid-container2" id="options">   
    <div id="option1" onclick="checkAnswer('option1')">Today</div>
    <div id="option2" onclick="checkAnswer('option2')">Friday</div>
    <div id="option3" onclick="checkAnswer('option3')">Sunday</div>
@@ -137,5 +306,8 @@ function checkAnswer(x){
    <div id="option5" onclick="checkAnswer('option5')">Tuesday</div>
    <div id="option6" onclick="checkAnswer('option6')">Friday</div>
   </div>
+  
+  <div class="gameOver" id="gameOver"><span style="Color:blue">Game over</span><br/><button onclick=startGame()>Start New Game</button></div>
+  
   </body>
  </main>
